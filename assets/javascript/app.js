@@ -38,7 +38,7 @@ renderButtons();
 //Displaying gifs
 $("button").on("click", function () {
     var comedy = $(this).attr("data-comedy");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + comedy + "&api_key=fIJaqVlWoTrh9SXh5DqUd3qva4eVsiAV&limit=10";
+    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + comedy + "&api_key=fIJaqVlWoTrh9SXh5DqUd3qva4eVsiAV&limit=10";
 
     $.ajax({
         url: queryURL,
@@ -56,12 +56,12 @@ $("button").on("click", function () {
                     var p = $("<p>").text("Rating: " + rating);
 
                     var comedyImage = $("<img>");
-                    comedyImage.attr("src", results[i].images.fixed_height.url);
+                    // comedyImage.attr("src", results[i].images.fixed_height.url);
                     comedyImage.attr("src", results[i].images.fixed_height.url); // still image stored into src of image
-                    comedyImage.attr("still", results[i].images.fixed_height.url); // still image
-                    comedyImage.attr("animate", results[i].images.fixed_height.url); // animated image
-                    comedyImage.attr("state", "still"); // set the image state
-                    comedyImage.addClass("image");
+                    comedyImage.attr("data-still", results[i].images.fixed_height.url); // still image
+                    comedyImage.attr("data-animate", results[i].images.fixed_height.url); // animated image
+                    comedyImage.attr("data-state", "still"); // set the image state
+                    comedyImage.addClass("gif");
                     gifDiv.prepend(p);
                     gifDiv.prepend(comedyImage);
 
@@ -70,20 +70,15 @@ $("button").on("click", function () {
             }
         });
 })
-// displayGifBtn(); // displays list of actions already created
-// addNewButton();
-// removeLastButton();
-// // Document Event Listeners
-// $(document).on("click", ".comedy", displayGifBtn);
-// $(document).on("click", function (event) {
-//     var state = $(this).attr('state');
-//     var source = $(this).attr("src");
-//     if (state == "still") {
-//         $(this).attr("src", $(this).attr("animate"));
-//         $(this).attr("state", "animate");
-//     } else {
-//         $(this).attr("src", $(this).attr("still"));
-//         $(this).attr("state", "still");
-//     }
-// });
+//function for animating/pausing gifs
+$(document).on("click", ".gif", function () {
+    var state = $(this).attr("data-state");
+    if (state === "still") {
+        $(this).attr('src', $(this).data("animate"));
+        $(this).attr("data-state", "animate");
+    }else{
+        $(this).attr('src', $(this).data("still"));
+        $(this).attr("data-state", "still");
+    }
+});
 
