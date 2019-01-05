@@ -38,7 +38,7 @@ renderButtons();
 //Displaying gifs
 $("button").on("click", function () {
     var comedy = $(this).attr("data-comedy");
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + comedy + "&api_key=fIJaqVlWoTrh9SXh5DqUd3qva4eVsiAV&limit=10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + comedy + "&api_key=fIJaqVlWoTrh9SXh5DqUd3qva4eVsiAV&limit=10";
 
     $.ajax({
         url: queryURL,
