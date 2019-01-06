@@ -12,7 +12,6 @@ function renderButtons() {
         gifBtn.attr("data-comedy", comedies[i]);
         gifBtn.text(comedies[i]);
         $("#buttons-view").append(gifBtn);
-        $("#buttons-view").append("");
     }
 }
 //Add new button
@@ -23,7 +22,7 @@ $("#add-comedy").on("click", function (event) {
         return false; // added so user cannot add a blank button
     }
     comedies.push(comedy);
-    $("#comedy-input").val("");
+    $("#comedy-input").val(" ");
     renderButtons();
 });
 
@@ -36,7 +35,7 @@ renderButtons();
     });
 
 //Displaying gifs
-$("button").on("click", function () {
+$(document).on("click", ".comedy", function() {
     var comedy = $(this).attr("data-comedy");
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + comedy + "&api_key=fIJaqVlWoTrh9SXh5DqUd3qva4eVsiAV&limit=10";
 
@@ -57,8 +56,8 @@ $("button").on("click", function () {
 
                     var comedyImage = $("<img>");
                     // comedyImage.attr("src", results[i].images.fixed_height.url);
-                    comedyImage.attr("src", results[i].images.fixed_height.url); // still image stored into src of image
-                    comedyImage.attr("data-still", results[i].images.fixed_height.url); // still image
+                    comedyImage.attr("src", results[i].images.fixed_height_still.url); // still image stored into src of image
+                    comedyImage.attr("data-still", results[i].images.fixed_height_still.url); // still image
                     comedyImage.attr("data-animate", results[i].images.fixed_height.url); // animated image
                     comedyImage.attr("data-state", "still"); // set the image state
                     comedyImage.addClass("gif");
@@ -71,13 +70,14 @@ $("button").on("click", function () {
         });
 })
 //function for animating/pausing gifs
+// $(document).on("click", ".comedy", renderButtons);
 $(document).on("click", ".gif", function () {
     var state = $(this).attr("data-state");
     if (state === "still") {
-        $(this).attr('src', $(this).data("animate"));
+        $(this).attr("src", $(this).data("animate"));
         $(this).attr("data-state", "animate");
     }else{
-        $(this).attr('src', $(this).data("still"));
+        $(this).attr("src", $(this).data("still"));
         $(this).attr("data-state", "still");
     }
 });
