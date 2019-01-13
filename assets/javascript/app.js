@@ -29,7 +29,7 @@ $("#add-comedy").on("click", function (event) {
 renderButtons();
 
     $("#remove-comedy").on("click", function(){
-    comedies.pop(comedy);
+    comedies.pop();
     renderButtons();
     return false;
     });
